@@ -72,6 +72,32 @@ public:
         }
 
         // ========================================================================
+        // release()
+        // ========================================================================
+        /*
+        Releases the ownership of the managed object, if any.
+        get() returns nullptr after the call.
+        The caller is responsible for cleaning up the object (e.g. by use of get_deleter()).
+        \refer: https://en.cppreference.com/cpp/memory/unique_ptr/release
+        */
+        inline Type* release() noexcept
+        {
+            return std::move(m_ptr);
+        }
+
+        // ========================================================================
+        // swap()
+        // ========================================================================
+        /*
+        Swaps the managed objects and associated deleters of *this and another unique_ptr object other.
+        */
+        inline void swap(unique_ptr& other) noexcept
+        {
+            std::swap(other.m_ptr, m_ptr);
+            std::swap(other.m_deleter, m_deleter);
+        }
+
+        // ========================================================================
         // Destructors
         // ========================================================================
         /*
